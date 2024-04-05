@@ -21,3 +21,4 @@ through the Arduino platform and NRF24 transceivers.
 - https://howtomechatronics.com/projects/diy-arduino-rc-receiver/
 - https://www.arduino.cc/reference/en/libraries/rf24/
 - https://docs.arduino.cc/learn/microcontrollers/analog-output/
+- https://pyserial.readthedocs.io/en/latest/
