@@ -22,3 +22,4 @@ through the Arduino platform and NRF24 transceivers.
 - https://www.arduino.cc/reference/en/libraries/rf24/
 - https://docs.arduino.cc/learn/microcontrollers/analog-output/
 - https://pyserial.readthedocs.io/en/latest/
+- https://devdocs.io/pygame/
