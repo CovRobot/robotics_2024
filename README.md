@@ -8,6 +8,7 @@ through the arduino platform and NRF24 transceivers.
 
 ## To-Do
 - power supply for car
+- work on wiring (after testing functionality)
 - design print and test frame for car
 - write and test code for arduino communication
 - write and test code for motor control
