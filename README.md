@@ -15,3 +15,9 @@ through the Arduino platform and NRF24 transceivers.
 - test interplay between frontend and backend
 - test interplay between Arduino state communication and motor control
 - calibrate and fine-tune
+
+
+## Resources:
+- https://howtomechatronics.com/projects/diy-arduino-rc-receiver/
+- https://www.arduino.cc/reference/en/libraries/rf24/
+- https://docs.arduino.cc/learn/microcontrollers/analog-output/
