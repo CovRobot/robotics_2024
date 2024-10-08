@@ -4,6 +4,8 @@
 #define CE_PIN 8
 #define CSN_PIN 9
 
+#define motorPin 3
+
 // Create an RF24 object
 RF24 radio(CE_PIN, CSN_PIN);
 
@@ -29,6 +31,8 @@ void setup() {
   radio.setDataRate(RF24_250KBPS);
   radio.openReadingPipe(1, address);
   radio.startListening();
+
+  pinMode(motorPin, OUTPUT);
 }
 
 void loop() {
