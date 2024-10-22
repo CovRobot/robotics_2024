@@ -8,7 +8,7 @@
 // Create an RF24 object
 RF24 radio(CE_PIN, CSN_PIN);
 
-// Address for the receiver
+// Addresses
 uint8_t address[][6] = {"trans", "piggy"};
 
 //defined content options for the messages from this system to the pulley system
@@ -32,13 +32,13 @@ void setup() {
     while (1) {} // hold program in infinite loop to prevent subsequent errors
   }
 
-  // prepare to send messages
-  radio.openWritingPipe(address[1]);
+  // prepare to send messages from address[0] on pipe 0 by default
+  radio.openWritingPipe(address[0]);
 }
 
 void loop() {
   // Send messages indicating direction to the pulley system. The system will
-  // receive those messages and move for like 200 millis when it gets a direction.
+  // receive those messages and move like 200 millis when it gets a direction.
   // Otherwise it won't do anything.
 
 

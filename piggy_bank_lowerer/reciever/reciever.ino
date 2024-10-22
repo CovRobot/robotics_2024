@@ -1,45 +1,78 @@
+#include <SPI.h>
 #include <RF24.h>
 
-// Replace with your desired RF24 library pins
+// define pins for the radio
 #define CE_PIN 8
 #define CSN_PIN 9
 
-#define motorPin 3
+// define the pin for the motor
+#define MOTOR_PIN 3
+
+//define the content to be expected for messages
+#define FORWARD 1
+#define BACK 0
 
 // Create an RF24 object
 RF24 radio(CE_PIN, CSN_PIN);
 
-// Address for the transmitter
-const uint8_t address[6] = {0x12, 0x13, 0x14, 0x15, 0x16, 0x17};
+// Addresses
+uint8_t address[][6] = {"trans", "piggy"};
 
 // Function to control the motor based on received message
 void controlMotor(bool direction) {
-  // Replace with your actual motor control code
+  // Replace with the actual motor control code (its supposed to be 
+  // brushless in the end I guess)
   if (direction) {
     // Forward motion
-    digitalWrite(motorPin, HIGH);
+    digitalWrite(MOTOR_PIN, HIGH);
   } else {
     // Backward motion
-    digitalWrite(motorPin, LOW);
+    digitalWrite(MOTOR_PIN, LOW);
   }
 }
 
 void setup() {
-  // Initialize the RF24 module
-  radio.begin();
-  radio.setPALevel(RF24_PA_HIGH);
-  radio.setDataRate(RF24_250KBPS);
-  radio.openReadingPipe(1, address);
+  // Begin serial channel for debugging
+  Serial.begin(9600);
+
+  // Check to make sure that the rf24 module was initialized succesfully
+  if (!radio.begin()) {
+    Serial.println(F("radio hardware not responding!"));
+    while (1) {} // hold program in infinite loop to prevent subsequent errors
+  }
+
+  // Prepare to receive messages args for openReadingPipe are the pipe to open
+  // and the address to open
+  radio.openReadingPipe(1, address[1]);
   radio.startListening();
 
-  pinMode(motorPin, OUTPUT);
+  // Initialize the motor Pin to output
+  pinMode(MOTOR_PIN, OUTPUT);
 }
 
 void loop() {
+  // If there is a message available, read it and do the apporpriate action (forwards
+  // or back). If no message is available, do nothing. If there is a message, change the
+  // state to the direction given for 200 millis. Then start listening again.
+
   if (radio.available()) {
+    // Set up a variable of a specific size to read the message into
     uint8_t data;
+
+    // Read the message into the data variable. The read variable requires the pointer
+    // to the variable to read the messasge into and the size of the size of that place.
+    // It is possible that this will not function correctly because there is some
+    // weirdness where the size of 'data' must be equal to the size of the message which
+    // is received. (see the part on read() in the RF24 docs)
     radio.read(&data, sizeof(data));
-    bool direction = data == 1;
+
+    // If the data is FORWARD then direction is true, else the direction is false
+    bool direction = data == FORWARD;
+
+    //tell the motor to go in a certain direction
     controlMotor(direction);
+
+    //sleep for 200 millis while the motor does its thing
+    delay(200);
   }
 }
