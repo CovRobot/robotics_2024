@@ -42,8 +42,8 @@ void setup() {
   }
 
   // Prepare to receive messages args for openReadingPipe are the pipe to open
-  // and the address to open
-  radio.openReadingPipe(1, address[1]);
+  // and the address to listen for
+  radio.openReadingPipe(1, address[0]);
   radio.startListening();
 
   // Initialize the motor Pin to output

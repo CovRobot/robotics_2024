@@ -25,7 +25,6 @@ void sendControlMessage(byte message) {
 void setup() {
   // Begin serial channel for debugging
   Serial.begin(9600);
-
   // Check to make sure that the rf24 module was initialized succesfully
   if (!radio.begin()) {
     Serial.println(F("radio hardware not responding!"));
@@ -51,5 +50,12 @@ void loop() {
     sendControlMessage(FORWARD);
   } else if (backward) {
     sendControlMessage(BACK);
+  }
+
+  while(true){
+    sendControlMessage(FORWARD);
+    delay(1000);
+    sendControlMessage(BACK);
+    delay(1000);
   }
 }
