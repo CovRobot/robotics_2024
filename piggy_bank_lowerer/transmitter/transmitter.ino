@@ -33,6 +33,13 @@ void setup() {
 
   // prepare to send messages from address[0] on pipe 0 by default
   radio.openWritingPipe(address[0]);
+
+
+  //testing for the motor
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
 }
 
 void loop() {
@@ -58,4 +65,9 @@ void loop() {
     sendControlMessage(BACK);
     delay(1000);
   }
+
+  digitalWrite(4, HIGH);
+  digitalWrite(5, LOW);
+  digitalWrite(2, HIGH);
+  digitalWrite(3, LOW);
 }
