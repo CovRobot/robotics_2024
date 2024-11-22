@@ -6,7 +6,12 @@
 #define CSN_PIN 9
 
 // define the pin for the transistor which controls the motor
-#define MOTOR_CONTROL_PIN
+// N1 = PIN 2 = UP
+// N2 = PIN 4 = DOWN
+// Speed = PIN 3
+#define N1 2
+#define N2 4
+#define SPEED 3
 
 //define the content to be expected for messages
 #define FORWARD 1
@@ -22,18 +27,23 @@ uint8_t address[][6] = {"trans", "piggy"};
 void controlMotor(bool direction) {
   // Replace with the actual motor control code (its supposed to be 
   // brushless in the end I guess)
+  digitalWrite(SPEED, 100);
   if (direction) {
     // Forward motion
-    digitalWrite(MOTOR__CONTROL_PIN, HIGH);
+    digitalWrite(N1, HIGH);
+    digitalWrite(N2, LOW);
   } else {
     // Backward motion
-    digitalWrite(MOTOR_CONTROL_PIN, LOW);
+    digitalWrite(N1, LOW);
+    digitalWrite(N2, HIGH);
+
   }
 }
 
 void setup() {
   // Begin serial channel for debugging
   Serial.begin(9600);
+
 
   // Check to make sure that the rf24 module was initialized succesfully
   if (!radio.begin()) {
@@ -47,7 +57,10 @@ void setup() {
   radio.startListening();
 
   // Initialize the motor Pin to output
-  pinMode(MOTOR_CONTROL_PIN, OUTPUT);
+  pinMode(N1, OUTPUT); //PIN 2
+  pinMode(N2, OUTPUT); //PIN 4
+  pinMode(SPEED, OUTPUT);//PIN 3
+
 }
 
 void loop() {
@@ -75,17 +88,9 @@ void loop() {
     //sleep for 200 millis while the motor does its thing
     delay(200);
   }
+  else{
+    digitalWrite(SPEED, 0);
+  }
 
-  //motor testing
-  digitalWrite(2, HIGH);
-  digitalWrite(4, HIGH);
-  digitalWrite(3, LOW);
-  digitalWrite(5, LOW);
 
-  delay(1000);
-
-  digitalWrite(2, LOW);
-  digitalWrite(4, LOW);
-  digitalWrite(3, HIGH);
-  digitalWrite(5, HIGH);
 }
