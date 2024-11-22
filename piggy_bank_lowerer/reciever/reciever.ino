@@ -5,8 +5,8 @@
 #define CE_PIN 8
 #define CSN_PIN 9
 
-// define the pin for the motor
-#define MOTOR_PIN 3
+// define the pin for the transistor which controls the motor
+#define MOTOR_CONTROL_PIN
 
 //define the content to be expected for messages
 #define FORWARD 1
@@ -24,10 +24,10 @@ void controlMotor(bool direction) {
   // brushless in the end I guess)
   if (direction) {
     // Forward motion
-    digitalWrite(MOTOR_PIN, HIGH);
+    digitalWrite(MOTOR__CONTROL_PIN, HIGH);
   } else {
     // Backward motion
-    digitalWrite(MOTOR_PIN, LOW);
+    digitalWrite(MOTOR_CONTROL_PIN, LOW);
   }
 }
 
@@ -47,10 +47,7 @@ void setup() {
   radio.startListening();
 
   // Initialize the motor Pin to output
-  //pinMode(MOTOR_PIN, OUTPUT);
-  for(int i = 2; i <= 5; i++){
-    pinMode(i, OUTPUT);
-  }
+  pinMode(MOTOR_CONTROL_PIN, OUTPUT);
 }
 
 void loop() {
