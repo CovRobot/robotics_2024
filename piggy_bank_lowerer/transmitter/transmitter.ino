@@ -35,11 +35,6 @@ void setup() {
   radio.openWritingPipe(address[0]);
 
 
-  //testing for the motor
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
 }
 
 void loop() {
@@ -49,25 +44,11 @@ void loop() {
 
 
   // Replace with your desired input method (e.g., buttons, joystick)
-  bool forward = digitalRead(A0); // Example: Read analog input for forward direction
-  bool backward = digitalRead(A1); // Example: Read analog input for backward direction
-
-  // Send control message based on input
-  if (forward) {
+  int forward = analogRead(A0); // Example: Read analog input for forward direction
+  if (forward<340){
     sendControlMessage(FORWARD);
-  } else if (backward) {
-    sendControlMessage(BACK);
   }
-
-  while(true){
-    sendControlMessage(FORWARD);
-    delay(1000);
+  else if (forward>680){
     sendControlMessage(BACK);
-    delay(1000);
-  }
-
-  digitalWrite(4, HIGH);
-  digitalWrite(5, LOW);
-  digitalWrite(2, HIGH);
-  digitalWrite(3, LOW);
+  } 
 }
