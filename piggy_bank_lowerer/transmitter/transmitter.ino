@@ -45,10 +45,10 @@ void loop() {
 
   // Replace with your desired input method (e.g., buttons, joystick)
   int forward = analogRead(A0); // Example: Read analog input for forward direction
-  if (forward<340){
+  if (forward !=0){
     sendControlMessage(FORWARD);
   }
-  else if (forward>680){
+  else if (forward==0){
     sendControlMessage(BACK);
   } 
 }
