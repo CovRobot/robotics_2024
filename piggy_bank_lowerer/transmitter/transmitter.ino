@@ -14,6 +14,7 @@ uint8_t address[][6] = {"trans", "piggy"};
 //defined content options for the messages from this system to the pulley system
 #define FORWARD 1
 #define BACK 0
+#define REST 
 
 // Function to send a control message
 void sendControlMessage(byte message) {
@@ -45,10 +46,11 @@ void loop() {
 
   // Replace with your desired input method (e.g., buttons, joystick)
   int forward = analogRead(A0); // Example: Read analog input for forward direction
-  if (forward !=0){
+  if (forward <260){
     sendControlMessage(FORWARD);
   }
-  else if (forward==0){
+  else if (forward >350){
     sendControlMessage(BACK);
-  } 
+  }
+  Serial.println(forward); 
 }
