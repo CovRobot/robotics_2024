@@ -5,27 +5,20 @@
 #define CE_PIN 8
 #define CSN_PIN 9
 
+// Pins for the joystick
+#define JOY_X A0
+#define JOY_Y A1
+
 // Create an RF24 object
 RF24 radio(CE_PIN, CSN_PIN);
 
 // Addresses
-uint8_t address[][6] = {"trans", "piggy"};
-
-//defined content options for the messages from this system to the pulley system
-#define FORWARD 1
-#define BACK 0
-#define REST 
-
-// Function to send a control message
-void sendControlMessage(byte message) {
-  // Send the message using the write function. Arguments for the write function are
-  // a pointer to the message and the length of the message
-  radio.write(&message, sizeof(message));
-}
+uint8_t address[][6] = {"00001", "00010"};
 
 void setup() {
   // Begin serial channel for debugging
   Serial.begin(9600);
+
   // Check to make sure that the rf24 module was initialized succesfully
   if (!radio.begin()) {
     Serial.println(F("radio hardware not responding!"));
@@ -34,23 +27,12 @@ void setup() {
 
   // prepare to send messages from address[0] on pipe 0 by default
   radio.openWritingPipe(address[0]);
-
-
 }
 
 void loop() {
-  // Send messages indicating direction to the pulley system. The system will
-  // receive those messages and move like 200 millis when it gets a direction.
-  // Otherwise it won't do anything.
+  // send the current data from the joystick to the car
 
-
-  // Replace with your desired input method (e.g., buttons, joystick)
-  int forward = analogRead(A0); // Example: Read analog input for forward direction
-  if (forward <260){
-    sendControlMessage(FORWARD);
-  }
-  else if (forward >350){
-    sendControlMessage(BACK);
-  }
-  Serial.println(forward); 
+  // read in the data from the joystick
+  int x = analogRead(JOY_X);
+  int y = analogRead(JOY_Y);
 }
